@@ -54,9 +54,13 @@ def img2str2():
 
 def open_img(image_path):
     im = Image.open(image_path)
-    if im.size[0]>1000 or im.size[1]>1000:
-        im = im.resize((int(im.size[0] * 0.1), int(im.size[1] * 0.05)), Image.NEAREST)
-    return im
+    width = im.size[0]
+    height = im.size[1]
+    while width >= 200:
+        width = width >> 1
+    while height > 150:
+        height = height >> 1
+    return im.resize((width, height), Image.NEAREST)
 
 
 
