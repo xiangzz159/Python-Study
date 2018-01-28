@@ -15,19 +15,19 @@
 
 from PIL import Image
 import hashlib
-import time
 import os
-
-
 import math
 
+
+#AI与向量空间图像识别
 class VectorCompare:
+    #计算矢量大小
     def magnitude(self,concordance):
         total = 0
         for word,count in concordance.items():
             total += count ** 2
         return math.sqrt(total)
-
+    #计算矢量之间cos值
     def relation(self,concordance1, concordance2):
         relevance = 0
         topvalue = 0
@@ -37,7 +37,7 @@ class VectorCompare:
         return topvalue / (self.magnitude(concordance1) * self.magnitude(concordance2))
 
 
-
+#将图片转化为矢量
 def buildvector(im):
     d1 = {}
 
@@ -53,9 +53,8 @@ v = VectorCompare()
 
 iconset = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 
-
+#加载训练集
 imageset = []
-
 for letter in iconset:
     if os.path.exists('./iconset/%s/'%(letter)) == False:
         os.mkdir('./iconset/%s/'%(letter))
@@ -103,6 +102,7 @@ for y in range(im2.size[0]): # slice across
 
     inletter=False
 
+#对验证码图片进行切割
 count = 0
 for letter in letters:
     m = hashlib.md5()
