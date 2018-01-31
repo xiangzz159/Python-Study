@@ -18,8 +18,8 @@ import _io
 from collections import namedtuple
 from PIL import Image
 
-class Nude(object):
 
+class Nude(object):
     Skin = namedtuple("Skin", "id skin region x y")
 
     def __init__(self, path_or_image):
@@ -117,9 +117,9 @@ class Nude(object):
             for x in range(self.width):
                 # 得到像素的 RGB 三个通道的值
                 # [x, y] 是 [(x,y)] 的简便写法
-                r = pixels[x, y][0]   # red
-                g = pixels[x, y][1]   # green
-                b = pixels[x, y][2]   # blue
+                r = pixels[x, y][0]  # red
+                g = pixels[x, y][1]  # green
+                b = pixels[x, y][2]  # blue
                 # 判断当前像素是否为肤色像素
                 isSkin = True if self._classify_skin(r, g, b) else False
                 # 给每个像素分配唯一 id 值（1, 2, 3...height*width）
@@ -137,7 +137,7 @@ class Nude(object):
 
                 # 存有相邻像素索引的列表，存放顺序为由大到小，顺序改变有影响
                 # 注意 _id 是从 1 开始的，对应的索引则是 _id-1
-                check_indexes = [_id - 2, # 当前像素左方的像素
+                check_indexes = [_id - 2,  # 当前像素左方的像素
                                  _id - self.width - 2,  # 当前像素左上方的像素
                                  _id - self.width - 1,  # 当前像素的上方的像素
                                  _id - self.width]  # 当前像素右上方的像素
@@ -154,10 +154,10 @@ class Nude(object):
                     if self.skin_map[index].skin:
                         # 若相邻像素与当前像素的 region 均为有效值，且二者不同，且尚未添加相同的合并任务
                         if (self.skin_map[index].region != None and
-                                region != None and region != -1 and
-                                self.skin_map[index].region != region and
-                                self.last_from != region and
-                                self.last_to != self.skin_map[index].region) :
+                                    region != None and region != -1 and
+                                    self.skin_map[index].region != region and
+                                    self.last_from != region and
+                                    self.last_to != self.skin_map[index].region):
                             # 那么这添加这两个区域的合并任务
                             self._add_merge(region, self.skin_map[index].region)
                         # 记录此相邻像素所在的区域号
@@ -181,7 +181,6 @@ class Nude(object):
         # 分析皮肤区域，得到判定结果
         self._analyse_regions()
         return self
-
 
     # self.merge_regions 的元素都是包含一些 int 对象（区域号）的列表
     # self.merge_regions 的元素中的区域号代表的区域都是待合并的区域
@@ -211,7 +210,7 @@ class Nude(object):
             # 那么合并这两个列表
             if from_index != to_index:
                 self.merge_regions[from_index].extend(self.merge_regions[to_index])
-                del(self.merge_regions[to_index])
+                del (self.merge_regions[to_index])
             return
 
         # 若两个区域号都不存在于 self.merge_regions 中
@@ -288,7 +287,8 @@ class Nude(object):
 
         # 如果最大皮肤区域小于总皮肤面积的 45%，不是色情图片
         if len(self.skin_regions[0]) / total_skin * 100 < 45:
-            self.message = "The biggest region contains less than 45 ({:.2f})".format(len(self.skin_regions[0]) / total_skin * 100)
+            self.message = "The biggest region contains less than 45 ({:.2f})".format(
+                len(self.skin_regions[0]) / total_skin * 100)
             self.result = False
             return self.result
 
@@ -307,27 +307,27 @@ class Nude(object):
     def _classify_skin(self, r, g, b):
         # 根据RGB值判定
         rgb_classifier = r > 95 and \
-            g > 40 and g < 100 and \
-            b > 20 and \
-            max([r, g, b]) - min([r, g, b]) > 15 and \
-            abs(r - g) > 15 and \
-            r > g and \
-            r > b
+                         g > 40 and g < 100 and \
+                         b > 20 and \
+                         max([r, g, b]) - min([r, g, b]) > 15 and \
+                         abs(r - g) > 15 and \
+                         r > g and \
+                         r > b
         # 根据处理后的 RGB 值判定
         nr, ng, nb = self._to_normalized(r, g, b)
         norm_rgb_classifier = nr / ng > 1.185 and \
-            float(r * b) / ((r + g + b) ** 2) > 0.107 and \
-            float(r * g) / ((r + g + b) ** 2) > 0.112
+                              float(r * b) / ((r + g + b) ** 2) > 0.107 and \
+                              float(r * g) / ((r + g + b) ** 2) > 0.112
 
         # HSV 颜色模式下的判定
         h, s, v = self._to_hsv(r, g, b)
         hsv_classifier = h > 0 and \
-            h < 35 and \
-            s > 0.23 and \
-            s < 0.68
+                         h < 35 and \
+                         s > 0.23 and \
+                         s < 0.68
 
         # YCbCr 颜色模式下的判定
-        y, cb, cr = self._to_ycbcr(r, g,  b)
+        y, cb, cr = self._to_ycbcr(r, g, b)
         ycbcr_classifier = 97.5 <= cb <= 142.5 and 134 <= cr <= 176
 
         # 效果不是很好，还需改公式
@@ -347,9 +347,9 @@ class Nude(object):
     def _to_ycbcr(self, r, g, b):
         # 公式来源：
         # http://stackoverflow.com/questions/19459831/rgb-to-ycbcr-conversion-problems
-        y = .299*r + .587*g + .114*b
-        cb = 128 - 0.168736*r - 0.331364*g + 0.5*b
-        cr = 128 + 0.5*r - 0.418688*g - 0.081312*b
+        y = .299 * r + .587 * g + .114 * b
+        cb = 128 - 0.168736 * r - 0.331364 * g + 0.5 * b
+        cr = 128 + 0.5 * r - 0.418688 * g - 0.081312 * b
         return y, cb, cr
 
     def _to_hsv(self, r, g, b):
@@ -379,7 +379,8 @@ class Nude(object):
 
     def inspect(self):
         _image = '{} {} {}×{}'.format(self.image.filename, self.image.format, self.width, self.height)
-        return "{_image}: result={_result} message='{_message}'".format(_image=_image, _result=self.result, _message=self.message)
+        return "{_image}: result={_result} message='{_message}'".format(_image=_image, _result=self.result,
+                                                                        _message=self.message)
 
     # 将在源文件目录生成图片文件，将皮肤区域可视化
     def showSkinRegions(self):
@@ -412,13 +413,14 @@ class Nude(object):
         # 分离源文件的完整文件名得到文件名和扩展名
         fileName, fileExtName = os.path.splitext(fileFullName)
         # 保存图片
-        simage.save('{}{}_{}{}'.format(fileDirectory, fileName,'Nude' if self.result else 'Normal', fileExtName))
+        simage.save('{}{}_{}{}'.format(fileDirectory, fileName, 'Nude' if self.result else 'Normal', fileExtName))
+
 
 if __name__ == "__main__":
-    # 启动 python ./proj4_SexImgRecognition/nude.py -v ./proj4_SexImgRecognition/ascii_dora.png
+    # 启动 python. / proj4_SexImgRecognition / nude.py - v. / proj4_SexImgRecognition / ascii_dora.png
     import argparse
 
-    parser = argparse.ArgumentParser(description='./resource/')
+    parser = argparse.ArgumentParser(description='Detect nudity in images.')
     parser.add_argument('files', metavar='image', nargs='+',
                         help='Images you wish to test')
     parser.add_argument('-r', '--resize', action='store_true',
