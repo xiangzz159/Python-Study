@@ -429,6 +429,9 @@ if __name__ == "__main__":
                         help='Generating areas of skin image')
 
     args = parser.parse_args()
+    print("resize:%s"%(args.resize))
+    print("visualization：%s"%(args.visualization))
+    print("files:%s"%(args.files))
 
     for fname in args.files:
         if os.path.isfile(fname):
