@@ -9,7 +9,7 @@
 
 @time: 2018/6/11 16:58
 
-@desc:
+@desc: TCP全连接扫描
 
 '''
 
@@ -45,6 +45,7 @@ def portScan(tgtHost, tgtPorts):
         print('Scanning port ' + str(tgtPort))
         connScan(tgtHost, int(tgtPort))
 
+
 def main():
     parser = optparse.OptionParser('usage %prog –H <target host> -p <target port>')
     parser.add_option('-H', dest='tgtHost', type='string', help='specify target host')
@@ -57,5 +58,7 @@ def main():
         print('[-] You must specify a target host and port[s]!')
         exit(0)
     portScan(tgtHost, args)
+
+
 if __name__ == '__main__':
     main()

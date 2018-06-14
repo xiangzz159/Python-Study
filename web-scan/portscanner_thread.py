@@ -1,4 +1,4 @@
-#！/usr/bin/env python
+# ！/usr/bin/env python
 # _*_ coding:utf-8 _*_
 
 '''
@@ -9,7 +9,7 @@
 
 @time: 2018/6/11 17:51
 
-@desc:
+@desc: TCP多线程全连接扫描
 
 '''
 
@@ -18,6 +18,7 @@ import socket
 import threading
 
 screenLock = threading.Semaphore(value=1)
+
 
 def connScan(tgtHost, tgtPort):
     try:
@@ -34,7 +35,6 @@ def connScan(tgtHost, tgtPort):
     finally:
         screenLock.release()
         connSkt.close()
-
 
 
 def portScan(tgtHost, tgtPorts):
@@ -54,6 +54,7 @@ def portScan(tgtHost, tgtPorts):
         t = threading.Thread(target=connScan(), args=(tgtHost, int(tgtPort)))
         t.start()
 
+
 def main():
     parser = optparse.OptionParser('usage %prog –H <target host> -p <target port>')
     parser.add_option('-H', dest='tgtHost', type='string', help='specify target host')
@@ -66,6 +67,7 @@ def main():
         print('[-] You must specify a target host and port[s]!')
         exit(0)
     portScan(tgtHost, args)
+
 
 if __name__ == '__main__':
     main()

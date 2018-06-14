@@ -9,8 +9,8 @@
 
 @time: 2018/6/11 19:29
 
-@desc: http://www.dayexie.com/detail2217031.html
-
+@desc: 结合nmap扫描器
+http://www.dayexie.com/detail2217031.html
 '''
 
 # coding=UTF-8
@@ -24,7 +24,7 @@ def nmapScan(tgtHost, tgtPort):
         state = results['scan'][tgtHost]['tcp'][int(tgtPort)]['state']
         print(" [*] " + tgtHost + " tcp/" + tgtPort + " " + state)
     else:
-        print('result scan length is Nonr')
+        print('results scan length is Nonr')
 def main():
     parser = optparse.OptionParser('usage %prog –H <target host> -p <target port>')
     parser.add_option('-H', dest='tgtHost', type='string', help='specify target host')
