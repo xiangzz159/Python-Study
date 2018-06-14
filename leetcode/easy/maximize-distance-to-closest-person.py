@@ -25,7 +25,7 @@ class Solution:
                 num_list.append(i)
         m = len(num_list)
         pre = num_list[0]
-        res = max(num_list[0] - 0, len(seats) - 1 - num_list[m - 1])
+        res = max(num_list[0] - 0, len(seats) - 1 - num_list[m - 1])    # 判断只有一个座位时
         for i in range(1, m):
             res = max(res, (num_list[i] - pre) / 2)
             pre = num_list[i]
@@ -36,6 +36,6 @@ class Solution:
 if __name__ == '__main__':
     # t1 = time.time()
     s = Solution()
-    str = s.maxDistToClosest([1,0,0,0])
+    str = s.maxDistToClosest([0,1,0,0,0,1])
     print(str)
     # print(time.time() - t1)
