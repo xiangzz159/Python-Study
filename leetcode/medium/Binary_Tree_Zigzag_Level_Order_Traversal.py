@@ -22,34 +22,8 @@ class TreeNode:
         self.right = None
 
 class Solution:
+
     def zigzagLevelOrder(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[int]]
-        """
-        lists = []
-        q = []
-        if root is not None:
-            q.append(root)
-            while q != []:
-                r = q.pop(0)
-                if r is not None:
-                    lists.append(r.val)
-                q.append(r.left)
-                q.append(r.right)
-        else:
-            return []
-
-        re = []
-        i = 0
-        while i < len(lists):
-            begin = i
-            end = i * 2 if i * 2 < len(lists) else len(lists)
-            re.append(lists[begin : end + 1])
-            i = i * 2 + 1
-        return re
-
-    def zigzagLevelOrder1(self, root):
         """
         :type root: TreeNode
         :rtype: List[List[int]]
@@ -75,5 +49,5 @@ if __name__ == '__main__':
     node.right.left = rl
     node.right.right = rr
     s = Solution()
-    print(s.zigzagLevelOrder1(node))
+    print(s.zigzagLevelOrder(node))
 
