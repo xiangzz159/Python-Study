@@ -18,7 +18,7 @@ from sklearn.preprocessing import MinMaxScaler
 from CryptocurrencyPrediction.PastSampler import PastSampler
 import numpy as np
 
-dfp = './data/bitcoin2017to2018.csv'
+dfp = './data/bitcoin2017_data.csv'
 
 columns = ['Close']
 df = pd.read_csv(dfp)
@@ -26,7 +26,7 @@ time_stamps = df['Timestamp']
 df = df.loc[:,columns]
 original_df = pd.read_csv(dfp).loc[:,columns]
 
-file_name = 'bitcoin2015to2016_close.h5'
+file_name = 'bitcoin2017_close.h5'
 
 scaler = MinMaxScaler()
 for c in columns:
