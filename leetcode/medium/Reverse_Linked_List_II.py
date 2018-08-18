@@ -35,7 +35,6 @@ class Solution(object):
         end = p
         pp = p
         qq = p.next
-        rr = None
         for i in range(m, n):
             rr = qq.next
             qq.next = pp
