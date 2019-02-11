@@ -9,7 +9,11 @@
 
 @time: 2019/2/11 18:25
 
-@desc:  冒泡排序
+@desc: 冒泡排序 https://mp.weixin.qq.com/s?__biz=MzU2MTI4MjI0MQ==&mid=2247483704&idx=1&sn=3d056587972675ba725c0ef2c2632709&scene=21#wechat_redirect
+
+时间复杂度：O(N^2)
+空间复杂度：0
+稳定算法
 
 '''
 

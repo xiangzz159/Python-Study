@@ -9,7 +9,12 @@
 
 @time: 2019/2/11 16:50
 
-@desc: 基数排序
+@desc: 基数排序 https://mp.weixin.qq.com/s?__biz=MzU2MTI4MjI0MQ==&mid=2247483779&idx=1&sn=77c51e9542b28aae1dbe1225ebf3b424&scene=21#wechat_redirect
+
+时间复杂度：O(d(n+r))
+空间复杂度：n+r
+稳定算法
+
 
 '''
 import copy
