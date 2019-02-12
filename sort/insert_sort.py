@@ -18,19 +18,18 @@
 '''
 
 
-def insert_sort(l):
-    n = len(l)
-    for i in range(1, n):
-        a, b = i, i
-        num = l[i]
-        while num < l[a - 1] and a - 1 >= 0:
-            a -= 1
-            if a - 1 < 0:
-                a = 0
-        while b > a:
-            l[b] = l[b - 1]
-            b -= 1
-        l[a] = num
+def insert_sort(arr):
+    length = len(arr)
+    for i in range(1, length):
+        x = arr[i]
+        for j in range(i, -1, -1):
+            # j为当前位置，试探j-1位置
+            if x < arr[j - 1]:
+                arr[j] = arr[j - 1]
+            else:
+                # 位置确定为j
+                break
+        arr[j] = x
 
 
 l = [50, 123, 543, 187, 49, 30, 0, 2, 11, 100]
