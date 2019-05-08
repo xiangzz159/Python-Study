@@ -7,7 +7,7 @@
 
 @contact: xiangzz159@qq.com
 
-@time : 2019/5/8 0008 10:49 
+@time : 2019/5/8 10:49
 
 @desc: https://leetcode-cn.com/problems/validate-binary-search-tree/
 
