@@ -28,7 +28,7 @@ def hello(lock):
         lock.acquire()
         g_number += 1
         # 释放锁
-        # print("hello")
+        print("hello", g_number)
         lock.release()
 
 def world(lock):
@@ -36,7 +36,7 @@ def world(lock):
         global  g_number
         lock.acquire()
         g_number += 1
-        # print("world")
+        print("world", g_number)
         lock.release()
 
 

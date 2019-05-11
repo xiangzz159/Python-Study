@@ -27,6 +27,6 @@ mt = MyThread()
 
 mt.start()
 
-for i in range(5):
+for i in range(10):
     print("这是主线程_", i)
     time.sleep(1)
