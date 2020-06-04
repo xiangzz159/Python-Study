@@ -173,8 +173,75 @@ def test():
     # 注意，这里的grad_ascent返回的是一个 matrix, 所以要使用getA方法变成ndarray类型
     # weights = grad_ascent(data_arr, class_labels).getA()
     # weights = stoc_grad_ascent0(np.array(data_arr), class_labels)
-    weights = stoc_grad_ascent0(np.array(data_arr), class_labels)
+    weights = stoc_grad_ascent1(np.array(data_arr), class_labels)
     plot_best_fit(weights)
 
 
 
+# -------从疝气病症预测病马的死亡率------
+
+def classify_vector(in_x, weights):
+    """
+    最终的分类函数，根据回归系数和特征向量来计算 Sigmoid 的值，大于0.5函数返回1，否则返回0
+    :param in_x: 特征向量，features
+    :param weights: 根据梯度下降/随机梯度下降 计算得到的回归系数
+    :return:
+    """
+    # print(np.sum(in_x * weights))
+    prob = sigmoid(np.sum(in_x * weights))
+    if prob > 0.5:
+        return 1.0
+    return 0.0
+
+def colic_test():
+    """
+    打开测试集和训练集，并对数据进行格式化处理,其实最主要的的部分，比如缺失值的补充（真的需要学会的），人家已经做了
+    :return:
+    """
+    f_train = open('../data/5.Logistic/HorseColicTraining.txt', 'r')
+    f_test = open('../data/5.Logistic/HorseColicTest.txt', 'r')
+    training_set = []
+    training_labels = []
+    # 解析训练数据集中的数据特征和Labels
+    # trainingSet 中存储训练数据集的特征，trainingLabels 存储训练数据集的样本对应的分类标签
+    for line in f_train.readlines():
+        curr_line = line.strip().split('\t')
+        if len(curr_line) == 1:
+            continue    # 这里如果就一个空的元素，则跳过本次循环
+        line_arr = [float(curr_line[i]) for i in range(21)]
+        training_set.append(line_arr)
+        training_labels.append(float(curr_line[21]))
+    # 使用 改进后的 随机梯度下降算法 求得在此数据集上的最佳回归系数 trainWeights
+    train_weights = stoc_grad_ascent1(np.array(training_set), training_labels, 500)
+    error_count = 0
+    num_test_vec = 0.0
+    # 读取 测试数据集 进行测试，计算分类错误的样本条数和最终的错误率
+    for line in f_test.readlines():
+        num_test_vec += 1
+        curr_line = line.strip().split('\t')
+        if len(curr_line) == 1:
+            continue    # 这里如果就一个空的元素，则跳过本次循环
+        line_arr = [float(curr_line[i]) for i in range(21)]
+        if int(classify_vector(np.array(line_arr), train_weights)) != int(curr_line[21]):
+            error_count += 1
+    error_rate = error_count / num_test_vec
+    print('the error rate is {}'.format(error_rate))
+    return error_rate
+
+def multi_test():
+    """
+    调用 colicTest() 10次并求结果的平均值
+    :return: nothing
+    """
+    num_tests = 10
+    error_sum = 0
+    for k in range(num_tests):
+        error_sum += colic_test()
+    print('after {} iteration the average error rate is {}'.format(num_tests, error_sum / num_tests))
+
+
+
+if __name__ == '__main__':
+    # test()
+    colic_test()
+    multi_test()
